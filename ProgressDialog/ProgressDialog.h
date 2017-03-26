@@ -1,32 +1,26 @@
-
-// ProgressDialog.h : PROJECT_NAME アプリケーションのメイン ヘッダー ファイルです。
-//
-
 #pragma once
+#include "resource.h"
+#include "afxcmn.h"
 
-#ifndef __AFXWIN_H__
-	#error "PCH に対してこのファイルをインクルードする前に 'stdafx.h' をインクルードしてください"
-#endif
+// CProgressDialog ダイアログ
 
-#include "resource.h"		// メイン シンボル
-
-
-// CProgressDialogApp:
-// このクラスの実装については、ProgressDialog.cpp を参照してください。
-//
-
-class CProgressDialogApp : public CWinApp
+class CProgressDialog : public CDialogEx
 {
-public:
-	CProgressDialogApp();
+	DECLARE_DYNAMIC(CProgressDialog)
 
-// オーバーライド
 public:
-	virtual BOOL InitInstance();
+	CProgressDialog(CWnd* pParent = NULL);   // 標準コンストラクター
+	virtual ~CProgressDialog();
 
-// 実装
+// ダイアログ データ
+	enum { IDD = IDD_PROGRESS_DIALOG };
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV サポート
 
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual BOOL OnInitDialog();
+private:
+	CProgressCtrl m_prg_state;
 };
-
-extern CProgressDialogApp theApp;

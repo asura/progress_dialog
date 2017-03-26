@@ -3,8 +3,9 @@
 //
 
 #include "stdafx.h"
-#include "ProgressDialog.h"
+#include "CProgressDialogApp.h"
 #include "ProgressDialogDlg.h"
+#include "ProgressDialog.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -30,6 +31,7 @@ void CProgressDialogDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CProgressDialogDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BTN_PROCESS, &CProgressDialogDlg::OnBnClickedBtnProcess)
 END_MESSAGE_MAP()
 
 
@@ -85,3 +87,8 @@ HCURSOR CProgressDialogDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+void CProgressDialogDlg::OnBnClickedBtnProcess()
+{
+	CProgressDialog dlg;
+	dlg.DoModal();
+}
