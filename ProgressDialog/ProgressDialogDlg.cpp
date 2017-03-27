@@ -9,6 +9,7 @@
 #include "ProgressDialog.h"
 #include "afxdialogex.h"
 #include "plog/Log.h"
+#include <memory>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -92,10 +93,10 @@ HCURSOR CProgressDialogDlg::OnQueryDragIcon()
 void CProgressDialogDlg::OnBnClickedBtnProcess()
 {
 	LOGI << "CProgressDialog¶¬";
-	m_process = std::make_shared<ConcreteProcess>();
+	auto process = std::make_shared<ConcreteProcess>();
 	CProgressDialog dlg(this,
-		std::bind(&ConcreteProcess::operator(), m_process),
-		std::bind(&ConcreteProcess::Cancel, m_process));
+		std::bind(&ConcreteProcess::operator(), process),
+		std::bind(&ConcreteProcess::Cancel, process));
 	LOGI << "CProgressDialog::DoModalŒÄ‚Ño‚µ";
 	auto result = dlg.DoModal();
 
