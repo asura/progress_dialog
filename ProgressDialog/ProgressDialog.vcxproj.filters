@@ -48,10 +48,10 @@
     <ClInclude Include="CProgressDialogApp.h">
       <Filter>01_アプリケーション</Filter>
     </ClInclude>
-    <ClInclude Include="ICancelable.h">
+    <ClInclude Include="ConcreteProcess.h">
       <Filter>04_処理</Filter>
     </ClInclude>
-    <ClInclude Include="ConcreteProcess.h">
+    <ClInclude Include="CancelableProcessBase.h">
       <Filter>04_処理</Filter>
     </ClInclude>
   </ItemGroup>
@@ -69,6 +69,9 @@
       <Filter>01_アプリケーション</Filter>
     </ClCompile>
     <ClCompile Include="ConcreteProcess.cpp">
+      <Filter>04_処理</Filter>
+    </ClCompile>
+    <ClCompile Include="CancelableProcessBase.cpp">
       <Filter>04_処理</Filter>
     </ClCompile>
   </ItemGroup>

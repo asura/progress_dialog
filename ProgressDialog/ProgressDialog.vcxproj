@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CProgressDialogApp.h" />
-    <ClInclude Include="ICancelable.h" />
+    <ClInclude Include="CancelableProcessBase.h" />
     <ClInclude Include="ConcreteProcess.h" />
     <ClInclude Include="ProgressDialog.h" />
     <ClInclude Include="ProgressDialogDlg.h" />
@@ -112,6 +112,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CancelableProcessBase.cpp" />
     <ClCompile Include="CProgressDialogApp.cpp" />
     <ClCompile Include="ConcreteProcess.cpp" />
     <ClCompile Include="ProgressDialog.cpp" />

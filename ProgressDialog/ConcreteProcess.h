@@ -1,16 +1,12 @@
 #pragma once
-#include "ICancelable.h"
+#include "CancelableProcessBase.h"
 
-class ConcreteProcess : public ICancelable
+class ConcreteProcess : public CancelableProcessBase
 {
-	bool m_cancel;
-
 public:
 	ConcreteProcess() = default;
 	~ConcreteProcess() = default;
 
-	bool operator()();
-
-	void Cancel();
+	bool Do();
 };
 

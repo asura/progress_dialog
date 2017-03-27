@@ -94,9 +94,10 @@ void CProgressDialogDlg::OnBnClickedBtnProcess()
 {
 	LOGI << "CProgressDialog¶¬";
 	auto process = std::make_shared<ConcreteProcess>();
-	CProgressDialog dlg(this,
-		std::bind(&ConcreteProcess::operator(), process),
-		std::bind(&ConcreteProcess::Cancel, process));
+	auto cancel_func = std::bind(&CancelableProcessBase::Cancel, process);
+	auto do_func = std::bind(&CancelableProcessBase::Do, process);
+	CProgressDialog dlg(this, do_func, cancel_func);
+
 	LOGI << "CProgressDialog::DoModalŒÄ‚Ño‚µ";
 	auto result = dlg.DoModal();
 
