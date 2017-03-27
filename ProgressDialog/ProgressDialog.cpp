@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "ICancelable.h"
 #include "ProgressDialog.h"
 #include "afxdialogex.h"
 #include "plog/Log.h"
@@ -13,11 +14,9 @@ IMPLEMENT_DYNAMIC(CProgressDialog, CDialogEx)
 
 CProgressDialog::CProgressDialog(
 	CWnd* pParent,
-	std::function<bool()> process,
-	std::function<void()> canceler)
+	std::shared_ptr<ICancelable> process)
 	: CDialogEx(CProgressDialog::IDD, pParent)
 	, m_process(process)
-	, m_canceler(canceler)
 {
 	SetupThread();
 }
@@ -106,7 +105,7 @@ BOOL CProgressDialog::OnInitDialog()
 	LOGI << "ƒ^ƒXƒN“Š“ü";
 	m_tasks.push_back(task_type([&]() -> bool {
 		LOGI << "actual process start";
-		auto result = m_process();
+		auto result = m_process->Do();
 		LOGI << "actual process end";
 
 		m_prg_state.SetMarquee(FALSE, 0);
@@ -120,7 +119,7 @@ BOOL CProgressDialog::OnInitDialog()
 
 void CProgressDialog::OnBnClickedCancel()
 {
-	m_canceler();
+	m_process->Cancel();
 }
 
 LRESULT CProgressDialog::OnCloseProgressDialog(WPARAM wParam, LPARAM lParam)

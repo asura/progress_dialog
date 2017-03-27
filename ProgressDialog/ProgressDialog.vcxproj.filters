@@ -54,6 +54,9 @@
     <ClInclude Include="CancelableProcessBase.h">
       <Filter>04_処理</Filter>
     </ClInclude>
+    <ClInclude Include="ICancelable.h">
+      <Filter>04_処理</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

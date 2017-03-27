@@ -5,19 +5,19 @@
 #include <deque>		// deque
 #include <functional>	// function
 #include <future>		// future, packaged_task
-#include <memory>		// unique_ptr
+#include <memory>		// shared_ptr
 #include <mutex>		// mutex
 #include <thread>		// thread
+
+class ICancelable;
 
 // CProgressDialog ダイアログ
 
 class CProgressDialog : public CDialogEx
 {
-	using process_type = std::function<bool()>;
 	using task_type = std::packaged_task<bool()>;
 
-	process_type m_process;
-	std::function<void()> m_canceler;
+	std::shared_ptr<ICancelable> m_process;
 	std::deque<task_type> m_tasks;
 
 	/// <summary>処理を実行するスレッド</summary>
@@ -45,7 +45,7 @@ class CProgressDialog : public CDialogEx
 	DECLARE_DYNAMIC(CProgressDialog)
 
 public:
-	CProgressDialog(CWnd* pParent, std::function<bool()> process, std::function<void()> canceler);
+	CProgressDialog(CWnd* pParent, std::shared_ptr<ICancelable> process);
 	virtual ~CProgressDialog();
 
 private:

@@ -105,6 +105,7 @@
     <ClInclude Include="CProgressDialogApp.h" />
     <ClInclude Include="CancelableProcessBase.h" />
     <ClInclude Include="ConcreteProcess.h" />
+    <ClInclude Include="ICancelable.h" />
     <ClInclude Include="ProgressDialog.h" />
     <ClInclude Include="ProgressDialogDlg.h" />
     <ClInclude Include="Resource.h" />

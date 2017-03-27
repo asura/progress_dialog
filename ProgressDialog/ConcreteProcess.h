@@ -7,6 +7,7 @@ public:
 	ConcreteProcess() = default;
 	~ConcreteProcess() = default;
 
-	bool Do();
+private:
+	bool DoImpl();
 };
 
