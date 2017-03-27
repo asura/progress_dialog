@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "CProgressDialogApp.h"
 #include "ProgressDialogDlg.h"
+#include "plog/Log.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,8 +26,7 @@ CProgressDialogApp::CProgressDialogApp()
 	// 再起動マネージャーをサポートします
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
 
-	// TODO: この位置に構築用コードを追加してください。
-	// ここに InitInstance 中の重要な初期化処理をすべて記述してください。
+	plog::init(plog::info, "CProgressDialogApp.log");
 }
 
 
@@ -51,6 +51,7 @@ BOOL CProgressDialogApp::InitInstance()
 
 	CWinApp::InitInstance();
 
+	LOGI << "START";
 
 	AfxEnableControlContainer();
 
@@ -94,6 +95,8 @@ BOOL CProgressDialogApp::InitInstance()
 	{
 		delete pShellManager;
 	}
+
+	LOGI << "END";
 
 	// ダイアログは閉じられました。アプリケーションのメッセージ ポンプを開始しないで
 	//  アプリケーションを終了するために FALSE を返してください。

@@ -3,12 +3,15 @@
 //
 
 #pragma once
-
+#include <memory>
+class ConcreteProcess;
 
 // CProgressDialogDlg ダイアログ
 class CProgressDialogDlg : public CDialogEx
 {
-// コンストラクション
+	std::shared_ptr<ConcreteProcess> m_process;
+
+	// コンストラクション
 public:
 	CProgressDialogDlg(CWnd* pParent = NULL);	// 標準コンストラクター
 

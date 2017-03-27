@@ -54,6 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -102,6 +103,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CProgressDialogApp.h" />
+    <ClInclude Include="ICancelable.h" />
+    <ClInclude Include="ConcreteProcess.h" />
     <ClInclude Include="ProgressDialog.h" />
     <ClInclude Include="ProgressDialogDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -110,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CProgressDialogApp.cpp" />
+    <ClCompile Include="ConcreteProcess.cpp" />
     <ClCompile Include="ProgressDialog.cpp" />
     <ClCompile Include="ProgressDialogDlg.cpp" />
     <ClCompile Include="stdafx.cpp">

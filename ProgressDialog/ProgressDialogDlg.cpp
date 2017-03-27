@@ -4,9 +4,11 @@
 
 #include "stdafx.h"
 #include "CProgressDialogApp.h"
+#include "ConcreteProcess.h"
 #include "ProgressDialogDlg.h"
 #include "ProgressDialog.h"
 #include "afxdialogex.h"
+#include "plog/Log.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -89,6 +91,18 @@ HCURSOR CProgressDialogDlg::OnQueryDragIcon()
 
 void CProgressDialogDlg::OnBnClickedBtnProcess()
 {
-	CProgressDialog dlg;
-	dlg.DoModal();
+	LOGI << "CProgressDialog¶¬";
+	m_process = std::make_shared<ConcreteProcess>();
+	CProgressDialog dlg(this,
+		std::bind(&ConcreteProcess::operator(), m_process),
+		std::bind(&ConcreteProcess::Cancel, m_process));
+	LOGI << "CProgressDialog::DoModalŒÄ‚Ño‚µ";
+	auto result = dlg.DoModal();
+
+	if (result != IDOK) {
+		AfxMessageBox(L"ˆ—‚Í³íI—¹‚µ‚Ü‚¹‚ñ‚Å‚µ‚½", MB_ICONEXCLAMATION | MB_OK);
+	}
+	else {
+		AfxMessageBox(L"ˆ—‚Í³í‚ÉI—¹‚µ‚Ü‚µ‚½", MB_ICONINFORMATION | MB_OK);
+	}
 }

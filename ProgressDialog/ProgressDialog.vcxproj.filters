@@ -13,14 +13,23 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="01_アプリケーション">
+      <UniqueIdentifier>{dc9e3de2-0cd1-471e-816e-d8d94b84d21d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_メインダイアログ">
+      <UniqueIdentifier>{5687dd81-9549-4e6d-bd4c-9d01c809bbfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_進捗ダイアログ">
+      <UniqueIdentifier>{1b39cb1f-0bcb-4b15-ba15-52dad74d020a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_処理">
+      <UniqueIdentifier>{0c0766ca-8a8e-41c9-84c9-0cac9997ccca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ProgressDialogDlg.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -30,25 +39,37 @@
     <ClInclude Include="Resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CProgressDialogApp.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ProgressDialog.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>03_進捗ダイアログ</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressDialogDlg.h">
+      <Filter>02_メインダイアログ</Filter>
+    </ClInclude>
+    <ClInclude Include="CProgressDialogApp.h">
+      <Filter>01_アプリケーション</Filter>
+    </ClInclude>
+    <ClInclude Include="ICancelable.h">
+      <Filter>04_処理</Filter>
+    </ClInclude>
+    <ClInclude Include="ConcreteProcess.h">
+      <Filter>04_処理</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ProgressDialogDlg.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CProgressDialogApp.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ProgressDialog.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>03_進捗ダイアログ</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressDialogDlg.cpp">
+      <Filter>02_メインダイアログ</Filter>
+    </ClCompile>
+    <ClCompile Include="CProgressDialogApp.cpp">
+      <Filter>01_アプリケーション</Filter>
+    </ClCompile>
+    <ClCompile Include="ConcreteProcess.cpp">
+      <Filter>04_処理</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

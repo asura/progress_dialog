@@ -52,3 +52,4 @@
 #endif
 
 
+#define WM_CLOSE_PROGRESS_DIALOG (WM_APP + 1)
