@@ -1,10 +1,9 @@
 #pragma once
 
-/// <summary>各種処理のインタフェース</summary>
+/// <summary>キャンセル(中断)可能な処理のインタフェース</summary>
 /// <remarks>
 /// 処理を実装するクラス、および特定の処理を必要とする箇所以外では
 /// 本クラスに依存させてください。
-/// 
 /// </remarks>
 class ICancelable
 {

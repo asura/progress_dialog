@@ -1,0 +1,74 @@
+@startuml
+
+Actor ユーザ as user
+participant MainDialog
+participant CProgressDialog
+participant CProgressCtrl
+participant ConcreteProcess
+
+user -> MainDialog : 処理開始ボタン押下
+activate MainDialog
+
+  MainDialog -> MainDialog : OnBnClickedBtnProcess
+  activate MainDialog
+
+    create ConcreteProcess
+    MainDialog-> ConcreteProcess : <<create>>
+
+    activate ConcreteProcess
+
+      MainDialog <-- ConcreteProcess
+
+      create CProgressDialog
+      MainDialog -> CProgressDialog : <<create>>
+      activate CProgressDialog
+
+        create CProgressCtrl
+        CProgressDialog -> CProgressCtrl : <<create>>
+        activate CProgressCtrl
+          CProgressDialog <-- CProgressCtrl
+
+          CProgressDialog -> CProgressDialog : SetupThread
+          activate CProgressDialog
+          deactivate CProgressDialog
+
+          MainDialog <-- CProgressDialog
+
+          MainDialog-> CProgressDialog : DoModal()
+
+          CProgressDialog -> CProgressDialog : OnInitDialog
+          activate CProgressDialog
+
+            CProgressDialog -> CProgressCtrl : SetMarquee(TRUE)
+
+par
+            CProgressDialog -> ConcreteProcess : Do()
+
+            ConcreteProcess -> ConcreteProcess : DoImpl()
+            activate ConcreteProcess
+
+              ConcreteProcess -> ConcreteProcess : ShouldCancel()
+              activate ConcreteProcess
+              deactivate ConcreteProcess
+
+            deactivate ConcreteProcess
+
+          CProgressDialog <-- ConcreteProcess : 終了ステータス
+          CProgressDialog -> CProgressCtrl : SetMarquee(FALSE)
+end
+
+          CProgressDialog -> CProgressDialog : OnCloseProgressDialog
+          activate CProgressDialog
+            CProgressDialog -> CProgressDialog : EndDialog
+            activate CProgressDialog
+            deactivate CProgressDialog
+          deactivate CProgressDialog
+
+        deactivate CProgressDialog
+
+      deactivate CProgressDialog
+    deactivate ConcreteProcess
+  deactivate MainDialog
+deactivate MainDialog
+
+@enduml

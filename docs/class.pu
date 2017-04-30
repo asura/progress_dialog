@@ -1,0 +1,37 @@
+@startuml
+
+interface ICancelable {
+  +{abstract} bool Do()
+  +{abstract} void Cancel()
+}
+
+abstract CancelableProcessBase {
+  +bool Do()
+  +void Cancel()
+  #{abstract} bool DoImpl()
+  #bool ShouldCancel() const
+}
+
+class ConcreteProcess {
+  -bool DoImpl()
+}
+
+CancelableProcessBase <|.. ICancelable
+ConcreteProcess <|-- CancelableProcessBase
+
+class CProgressDialog {
+  +CProgressDialog(CWnd*, std::shared_ptr<ICancelable>)
+  #BOOL OnInitDialog()
+  +void OnBnClickedCancel()
+}
+
+class MainDialog {
+  +void OnBnClickedBtnProcess()
+}
+
+CProgressDialog .l. ICancelable
+
+MainDialog .l. ConcreteProcess
+MainDialog .d. CProgressDialog
+
+@enduml

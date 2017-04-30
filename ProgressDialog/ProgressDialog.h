@@ -1,13 +1,7 @@
 #pragma once
 #include "resource.h"
 #include "afxcmn.h"
-#include <atomic>		// atomic
-#include <deque>		// deque
-#include <functional>	// function
-#include <future>		// future, packaged_task
-#include <memory>		// shared_ptr
-#include <mutex>		// mutex
-#include <thread>		// thread
+#include "WorkerThereadManager.h"
 
 class ICancelable;
 
@@ -42,14 +36,13 @@ class CProgressDialog : public CDialogEx
 	/// </remarks>
 	bool m_task_result;
 
+	WorkerThereadManager m_task_manager;
+
 	DECLARE_DYNAMIC(CProgressDialog)
 
 public:
 	CProgressDialog(CWnd* pParent, std::shared_ptr<ICancelable> process);
 	virtual ~CProgressDialog();
-
-private:
-	void SetupThread();
 
 public:
 // ダイアログ データ
