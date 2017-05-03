@@ -19,6 +19,11 @@ class ConcreteProcess {
 ICancelable <|.u. CancelableProcessBase
 CancelableProcessBase <|-u- ConcreteProcess
 
+class WorkerThreadManager {
+	+void push_back(std::shared_ptr<ICancelable>);
+	+bool get_result() const;
+}
+
 class CProgressDialog {
   +CProgressDialog(CWnd*, std::shared_ptr<ICancelable>)
   #BOOL OnInitDialog()
@@ -29,7 +34,9 @@ class MainDialog {
   +void OnBnClickedBtnProcess()
 }
 
-CProgressDialog .l. ICancelable
+CProgressDialog -d-> WorkerThreadManager : m_task_manager
+
+WorkerThreadManager -l-> ICancelable : m_process
 
 MainDialog .l. ConcreteProcess
 MainDialog .d. CProgressDialog

@@ -1,7 +1,7 @@
 #pragma once
 #include "resource.h"
 #include "afxcmn.h"
-#include "WorkerThereadManager.h"
+#include "WorkerThreadManager.h"
 
 class ICancelable;
 
@@ -9,34 +9,8 @@ class ICancelable;
 
 class CProgressDialog : public CDialogEx
 {
-	using task_type = std::packaged_task<bool()>;
-
+	WorkerThreadManager m_task_manager;
 	std::shared_ptr<ICancelable> m_process;
-	std::deque<task_type> m_tasks;
-
-	/// <summary>処理を実行するスレッド</summary>
-	/// <remarks>
-	/// deque(m_tasks)を監視し、もしタスクが登録されたら実行する。
-	/// タスクが登録されてなければ100ミリ秒待機する。
-	/// タスク側で実行中フラグ(m_processing)がfalseにされるか
-	/// タスクの実行結果がfalseの場合にスレッドを終了し、ダイアログを閉じる。
-	/// </remarks>
-	std::unique_ptr<std::thread> m_thread_pool;
-	std::mutex m_tasks_mutex;
-
-	/// <summary>実行中フラグ</summary>
-	/// <remarks>
-	/// この値がfalseになるとスレッドを停止する
-	/// </remarks>
-	std::atomic<bool> m_processing;
-
-	/// <summary>タスク実行結果</summary>
-	/// <remarks>
-	/// この値がfalseだとスレッドを停止する
-	/// </remarks>
-	bool m_task_result;
-
-	WorkerThereadManager m_task_manager;
 
 	DECLARE_DYNAMIC(CProgressDialog)
 
@@ -44,8 +18,13 @@ public:
 	CProgressDialog(CWnd* pParent, std::shared_ptr<ICancelable> process);
 	virtual ~CProgressDialog();
 
+	void ActionWhenThreadEnds();
+	void ActionWhenProcessExecutes();
+
 private:
-	void SetupThread();
+	using action_type = void(CProgressDialog::*)();
+
+	boost::optional<std::function<void()>> generate_action(action_type action);
 
 public:
 // ダイアログ データ

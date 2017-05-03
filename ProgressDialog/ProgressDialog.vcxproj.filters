@@ -25,6 +25,9 @@
     <Filter Include="04_処理">
       <UniqueIdentifier>{0c0766ca-8a8e-41c9-84c9-0cac9997ccca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05_タスク管理">
+      <UniqueIdentifier>{f53af92e-c679-4d64-9ada-57ad296a4c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -54,6 +57,9 @@
     <ClInclude Include="ICancelable.h">
       <Filter>04_処理</Filter>
     </ClInclude>
+    <ClInclude Include="WorkerThreadManager.h">
+      <Filter>05_タスク管理</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -73,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="CancelableProcessBase.cpp">
       <Filter>04_処理</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkerThreadManager.cpp">
+      <Filter>05_タスク管理</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

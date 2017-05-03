@@ -4,6 +4,7 @@ Actor ユーザ as user
 participant MainDialog
 participant CProgressDialog
 participant CProgressCtrl
+participant WorkerThreadManager
 participant ConcreteProcess
 
 user -> MainDialog : 処理開始ボタン押下
@@ -28,45 +29,60 @@ activate MainDialog
         activate CProgressCtrl
           CProgressDialog <-- CProgressCtrl
 
-          CProgressDialog -> CProgressDialog : SetupThread
-          activate CProgressDialog
-          deactivate CProgressDialog
+          create WorkerThreadManager
+          CProgressDialog -> WorkerThreadManager : <<create>>
+          activate WorkerThreadManager
+            CProgressDialog <-- WorkerThreadManager
 
-          MainDialog <-- CProgressDialog
+            MainDialog <-- CProgressDialog
 
-          MainDialog-> CProgressDialog : DoModal()
+            MainDialog-> CProgressDialog : DoModal()
 
-          CProgressDialog -> CProgressDialog : OnInitDialog
-          activate CProgressDialog
+            CProgressDialog -> CProgressDialog : OnInitDialog
+            activate CProgressDialog
 
-            CProgressDialog -> CProgressCtrl : SetMarquee(TRUE)
+              CProgressDialog -> CProgressCtrl : SetMarquee(TRUE)
+              CProgressDialog -> WorkerThreadManager : push_back
+              CProgressDialog <-- WorkerThreadManager
 
 par
-            CProgressDialog -> ConcreteProcess : Do()
+              WorkerThreadManager -> ConcreteProcess : Do()
 
-            ConcreteProcess -> ConcreteProcess : DoImpl()
-            activate ConcreteProcess
-
-              ConcreteProcess -> ConcreteProcess : ShouldCancel()
+              ConcreteProcess -> ConcreteProcess : DoImpl()
               activate ConcreteProcess
+
+                ConcreteProcess -> ConcreteProcess : ShouldCancel()
+                activate ConcreteProcess
+                deactivate ConcreteProcess
+
+                WorkerThreadManager <-- ConcreteProcess : 終了ステータス
+
               deactivate ConcreteProcess
 
-            deactivate ConcreteProcess
+              CProgressDialog <- WorkerThreadManager : ActionWhenProcessExecutes()
+              activate CProgressDialog
+                CProgressDialog -> CProgressCtrl : SetMarquee(FALSE)
+              deactivate CProgressDialog
 
-          CProgressDialog <-- ConcreteProcess : 終了ステータス
-          CProgressDialog -> CProgressCtrl : SetMarquee(FALSE)
 end
+              CProgressDialog <- WorkerThreadManager : ActionWhenThreadEnds()
+              activate CProgressDialog
 
-          CProgressDialog -> CProgressDialog : OnCloseProgressDialog
-          activate CProgressDialog
-            CProgressDialog -> CProgressDialog : EndDialog
-            activate CProgressDialog
+                CProgressDialog -> CProgressDialog : OnCloseProgressDialog
+                activate CProgressDialog
+                  CProgressDialog -> WorkerThreadManager : get_result()
+                  CProgressDialog <-- WorkerThreadManager : 終了ステータス
+
+                  CProgressDialog -> CProgressDialog : EndDialog
+                  activate CProgressDialog
+                    MainDialog <-- CProgressDialog
+                  deactivate CProgressDialog
+                deactivate CProgressDialog
+              deactivate CProgressCtrl
             deactivate CProgressDialog
           deactivate CProgressDialog
-
         deactivate CProgressDialog
-
-      deactivate CProgressDialog
+      deactivate WorkerThreadManager
     deactivate ConcreteProcess
   deactivate MainDialog
 deactivate MainDialog
