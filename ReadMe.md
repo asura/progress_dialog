@@ -7,5 +7,3 @@
 # Todo
 
 * タスク管理をThreadPoolクラスとして切り出す
-* ソリューションフォルダは不要だった
-* 直接組み込んであるplogをgit submodule化
