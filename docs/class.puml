@@ -16,8 +16,8 @@ class ConcreteProcess {
   -bool DoImpl()
 }
 
-CancelableProcessBase <|.. ICancelable
-ConcreteProcess <|-- CancelableProcessBase
+ICancelable <|.u. CancelableProcessBase
+CancelableProcessBase <|-u- ConcreteProcess
 
 class CProgressDialog {
   +CProgressDialog(CWnd*, std::shared_ptr<ICancelable>)
