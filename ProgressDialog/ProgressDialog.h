@@ -44,6 +44,9 @@ public:
 	CProgressDialog(CWnd* pParent, std::shared_ptr<ICancelable> process);
 	virtual ~CProgressDialog();
 
+private:
+	void SetupThread();
+
 public:
 // ダイアログ データ
 	enum { IDD = IDD_PROGRESS_DIALOG };
