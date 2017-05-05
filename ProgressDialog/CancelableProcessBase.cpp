@@ -14,8 +14,15 @@ void CancelableProcessBase::Cancel()
 
 bool CancelableProcessBase::Do()
 {
-	ResetCancel();
-	return DoImpl();
+	try
+	{
+		ResetCancel();
+		return DoImpl();
+	}
+	catch (...)
+	{
+		return false;
+	}
 }
 
 void CancelableProcessBase::ResetCancel()

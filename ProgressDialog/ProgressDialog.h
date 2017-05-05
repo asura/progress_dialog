@@ -1,7 +1,8 @@
 #pragma once
 #include "resource.h"
 #include "afxcmn.h"
-#include "WorkerThreadManager.h"
+#include <future>
+#include <memory>
 
 class ICancelable;
 
@@ -9,8 +10,11 @@ class ICancelable;
 
 class CProgressDialog : public CDialogEx
 {
-	WorkerThreadManager m_task_manager;
+	/// <summary>非同期処理させたい処理内容</summary>
 	std::shared_ptr<ICancelable> m_process;
+
+	/// <summary>非同期処理の結果を格納</summary>
+	std::future<bool> m_task;
 
 	DECLARE_DYNAMIC(CProgressDialog)
 
@@ -19,12 +23,6 @@ public:
 	virtual ~CProgressDialog();
 
 	void ActionWhenThreadEnds();
-	void ActionWhenProcessExecutes();
-
-private:
-	using action_type = void(CProgressDialog::*)();
-
-	boost::optional<std::function<void()>> generate_action(action_type action);
 
 public:
 // ダイアログ データ
