@@ -26,6 +26,7 @@ CProgressDialogApp::CProgressDialogApp()
 	// 再起動マネージャーをサポートします
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
 
+	::DeleteFile(L"CProgressDialogApp.log");
 	plog::init(plog::info, "CProgressDialogApp.log");
 }
 
