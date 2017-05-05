@@ -4,7 +4,7 @@ Actor ユーザ as user
 participant MainDialog
 participant CProgressDialog
 participant CProgressCtrl
-participant WorkerThreadManager
+participant "std::future" AS future
 participant ConcreteProcess
 
 user -> MainDialog : 処理開始ボタン押下
@@ -29,11 +29,6 @@ activate MainDialog
         activate CProgressCtrl
           CProgressDialog <-- CProgressCtrl
 
-          create WorkerThreadManager
-          CProgressDialog -> WorkerThreadManager : <<create>>
-          activate WorkerThreadManager
-            CProgressDialog <-- WorkerThreadManager
-
             MainDialog <-- CProgressDialog
 
             MainDialog-> CProgressDialog : DoModal()
@@ -42,11 +37,12 @@ activate MainDialog
             activate CProgressDialog
 
               CProgressDialog -> CProgressCtrl : SetMarquee(TRUE)
-              CProgressDialog -> WorkerThreadManager : push_back
-              CProgressDialog <-- WorkerThreadManager
+
+              create future
+              CProgressDialog -> future : std::async
 
 par
-              WorkerThreadManager -> ConcreteProcess : Do()
+              future -> ConcreteProcess : Do()
 
               ConcreteProcess -> ConcreteProcess : DoImpl()
               activate ConcreteProcess
@@ -55,34 +51,28 @@ par
                 activate ConcreteProcess
                 deactivate ConcreteProcess
 
-                WorkerThreadManager <-- ConcreteProcess : 終了ステータス
+                future <-- ConcreteProcess : 終了ステータス
 
               deactivate ConcreteProcess
 
-              CProgressDialog <- WorkerThreadManager : ActionWhenProcessExecutes()
+              CProgressDialog <- future : ActionWhenThreadEnds()
               activate CProgressDialog
-                CProgressDialog -> CProgressCtrl : SetMarquee(FALSE)
-              deactivate CProgressDialog
-
-end
-              CProgressDialog <- WorkerThreadManager : ActionWhenThreadEnds()
-              activate CProgressDialog
-
-                CProgressDialog -> CProgressDialog : OnCloseProgressDialog
+                CProgressDialog -> CProgressDialog : PostMessage(WM_CLOSE_PROGRESS_DIALOG)
                 activate CProgressDialog
-                  CProgressDialog -> WorkerThreadManager : get_result()
-                  CProgressDialog <-- WorkerThreadManager : 終了ステータス
+  
+end
+                  CProgressDialog -> CProgressCtrl : SetMarquee(FALSE)
+                  CProgressDialog -> future : get()
+                  CProgressDialog <-- future : 終了ステータス
 
                   CProgressDialog -> CProgressDialog : EndDialog
                   activate CProgressDialog
                     MainDialog <-- CProgressDialog
                   deactivate CProgressDialog
-                deactivate CProgressDialog
-              deactivate CProgressCtrl
+                deactivate CProgressCtrl
             deactivate CProgressDialog
           deactivate CProgressDialog
         deactivate CProgressDialog
-      deactivate WorkerThreadManager
     deactivate ConcreteProcess
   deactivate MainDialog
 deactivate MainDialog
